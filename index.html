@@ -1,0 +1,166 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Temperatura</title>
+    <style>
+        /* --- CSS para Estilização --- */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            /* Garante que padding não aumente a largura total */
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 15px;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: #e6f7ff;
+            display: none;
+            /* Começa escondido */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Conversor de Temperatura</h1>
+
+        <!-- Campo de Entrada -->
+        <div class="input-group">
+            <label for="temperature">Digite a temperatura:</label>
+            <input type="number" id="temperature" placeholder="Ex: 25">
+        </div>
+
+        <!-- Seleção de Conversão -->
+        <div class="input-group">
+            <label for="fromUnit">De:</label>
+            <select id="fromUnit">
+                <option value="celsius">Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="kelvin">Kelvin (K)</option>
+            </select>
+        </div>
+
+        <!-- Botão de Conversão -->
+        <button onclick="convertTemperature()">Converter</button>
+
+        <!-- Resultado -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // --- JavaScript para a Lógica de Conversão ---
+
+        function convertTemperature() {
+            // 1. Capturar os valores
+            const tempInput = document.getElementById('temperature').value;
+            const fromUnit = document.getElementById('fromUnit').value;
+            const resultDiv = document.getElementById('result');
+
+            // Validação básica
+            if (tempInput === "" || isNaN(tempInput)) {
+                resultDiv.style.display = 'block';
+                resultDiv.style.borderColor = 'red';
+                resultDiv.style.backgroundColor = '#ffe6e6';
+                resultDiv.innerHTML = 'Por favor, insira um valor válido.';
+                return;
+            }
+
+            const temperature = parseFloat(tempInput);
+            let convertedValue = 0;
+            let targetUnit = '';
+
+            // 2. Lógica de Conversão (O Coração do App)
+
+            if (fromUnit === 'celsius') {
+                // Celsius para Fahrenheit: (C * 9/5) + 32
+                convertedValue = (temperature * 9 / 5) + 32;
+                targetUnit = '°F';
+            } else if (fromUnit === 'fahrenheit') {
+                // Fahrenheit para Celsius: (F - 32) * 5/9
+                convertedValue = (temperature - 32) * 5 / 9;
+                targetUnit = '°C';
+            } else if (fromUnit === 'kelvin') {
+                // Kelvin para Celsius: K - 273.15
+                convertedValue = temperature - 273.15;
+                targetUnit = '°C';
+            }
+
+            // 3. Exibir o Resultado
+            resultDiv.style.display = 'block';
+            resultDiv.style.borderColor = '#28a745';
+            resultDiv.style.backgroundColor = '#e6f7ff';
+            resultDiv.innerHTML = `${temperature}°${fromUnit === 'celsius' ? 'C' : fromUnit ===
+                'fahrenheit' ? 'F' : 'K'} é igual a ${convertedValue.toFixed(2)} ${targetUnit}`;
+        }
+
+    </script>
+</body>
+
+</html>
+'''
